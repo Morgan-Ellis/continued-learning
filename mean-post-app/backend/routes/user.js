@@ -1,10 +1,12 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
 const router = express.Router();
 
+//POST SIGN UP
 router.post("/signup", (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hash => {
     const user = new User({
@@ -15,7 +17,7 @@ router.post("/signup", (req, res, next) => {
       .save()
       .then(result => {
         res.status(201).json({
-          message: "User created!",
+          message: "User created. ʕ•ᴥ•ʔﾉ♡",
           result: result
         });
       })
@@ -27,30 +29,44 @@ router.post("/signup", (req, res, next) => {
   });
 });
 
+//POST LOGIN
 router.post("/login", (req, res, next) => {
+  let fetchedUser;
+
   User.findOne({
       email: req.body.email
     })
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: "Authorization failed- email not found."
+          message: "Authorization failed- email not found. ʕ╭ರᴥ•́ʔ"
         });
       }
+      fetchedUser = user;
       return bcrypt.compare(req.body.password, user.password)
     })
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: "Authorization failed- email not found."
-        })
+          message: "Authorization failed- incorrect password. ʕ╭ರᴥ•́ʔ"
+        });
       }
+      const token = jwt.sign({
+        email: fetchedUser.email,
+        userId: fetchedUser._id
+      }, "polish_debonair_meaty_gold_preserve_befitting_glorious_uncle_trail", {
+        expiresIn: "1h"
+      });
+      console.log(token);
+      res.status(200).json({
+        token: token,
+        message: "Logged in successfully. ᕙʕಠᴥಠʔᕗ"
+      })
     })
-
     .catch(err => {
       return res.status(401).json({
-        message: "Authorization failed- email not found."
-      })
+        message: "Authorization failed.  ʕ•́ᴥ•̀ʔ"
+      });
     });
 });
 

@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 
 const Post = require("../models/post");
+const verifyAuth = require("../middleware/verify-auth");
 
 const router = express.Router();
 
@@ -33,6 +34,7 @@ const storage = multer.diskStorage({
 //POST
 router.post(
   "",
+  verifyAuth,
   multer({
     storage: storage
   }).single("image"),
@@ -45,7 +47,7 @@ router.post(
     });
     post.save().then(createdPost => {
       res.status(201).json({
-        message: "Post added successfully.",
+        message: "Post added successfully. ᕙʕ•ᴥ•ʔᕗ",
         post: {
           ...createdPost,
           id: createdPost._id
@@ -71,7 +73,7 @@ router.get("", (req, res, next) => {
     return Post.count();
   }).then(count => {
     res.status(200).json({
-      message: "Posts fetched successfully.",
+      message: "Posts fetched successfully. ʕง•ᴥ•ʔง",
       posts: fetchedPosts,
       maxPosts: count
     });
@@ -85,7 +87,7 @@ router.get("/:id", (req, res, next) => {
       res.status(200).json(post);
     } else {
       res.status(404).json({
-        message: "Post not found."
+        message: "Post not found. ʕ╭ರᴥ•́ʔ"
       });
     }
   });
@@ -94,6 +96,7 @@ router.get("/:id", (req, res, next) => {
 //PUT
 router.put(
   "/:id",
+  verifyAuth,
   multer({
     storage: storage
   }).single("image"),
@@ -114,20 +117,20 @@ router.put(
       _id: req.params.id
     }, post).then(result => {
       res.status(200).json({
-        message: "Update successful."
+        message: "Post updated successfully. ᕙʕ•ᴥ•ʔᕗ"
       });
     });
   }
 );
 
 //DELETE
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", verifyAuth, (req, res, next) => {
   Post.deleteOne({
     _id: req.params.id
   }).then(result => {
     console.log(result);
     res.status(200).json({
-      message: "Post deleted."
+      message: "Post deleted.  ʕ╭ರᴥಠʔ"
     });
   });
 });

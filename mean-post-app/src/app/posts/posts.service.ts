@@ -6,10 +6,11 @@ import { Router } from "@angular/router";
 
 import { Post } from "./post.model";
 
-const apiUrl = "http://localhost:3000/api/posts/";
+const postsUrl = "http://localhost:3000/api/posts/";
 
 @Injectable({ providedIn: "root" })
 export class PostsService {
+  
   private posts: Post[] = [];
   private postsUpdated = new Subject<{ posts: Post[]; postCount: number }>();
 
@@ -20,7 +21,7 @@ export class PostsService {
     const queryParams = `?pagesize=${postsPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; posts: any; maxPosts: number }>(
-        apiUrl + queryParams
+        postsUrl + queryParams
       )
       .pipe(
         map(postData => {
@@ -57,7 +58,7 @@ export class PostsService {
       title: string;
       content: string;
       imagePath: string;
-    }>(apiUrl + id);
+    }>(postsUrl + id);
   }
 
   //POST
@@ -68,7 +69,7 @@ export class PostsService {
     postData.append("image", image, title);
     this.http
       .post<{ message: string; post: Post }>(
-        apiUrl,
+        postsUrl,
         postData
       )
       .subscribe(responseData => {
@@ -102,7 +103,7 @@ export class PostsService {
       };
     }
     this.http
-      .put(apiUrl + id, postData)
+      .put(postsUrl + id, postData)
       .subscribe(response => {
         // const updatedPosts = [...this.posts];
         // const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
@@ -122,7 +123,7 @@ export class PostsService {
   //DELETE
   deletePost(postId: string) {
    return  this.http
-      .delete(apiUrl + postId);
+      .delete(postsUrl + postId);
       // .subscribe(() => {
       //   const updatedPosts = this.posts.filter(post => post.id !== postId);
       //   this.posts = updatedPosts;
