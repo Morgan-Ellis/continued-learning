@@ -57,9 +57,9 @@ router.post("/login", (req, res, next) => {
       }, "polish_debonair_meaty_gold_preserve_befitting_glorious_uncle_trail", {
         expiresIn: "1h"
       });
-      console.log(token);
       res.status(200).json({
         token: token,
+        expiresIn: 3600,
         message: "Logged in successfully. ᕙʕಠᴥಠʔᕗ"
       })
     })

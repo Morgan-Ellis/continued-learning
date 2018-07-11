@@ -1,5 +1,4 @@
-<mat-card>
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-card *ngIf="!isLoading">
 
   <div>
     <h1 class="signup-header">SIGN UP</h1>
@@ -21,4 +20,7 @@
     <button mat-raised-button color="accent" type="submit" *ngIf="!isLoading">Sign Up</button>
 
   </form>
+
 </mat-card>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>

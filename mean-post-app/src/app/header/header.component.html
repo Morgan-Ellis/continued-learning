@@ -1,25 +1,29 @@
 <mat-toolbar color="primary">
 
-    <span>
-      <a routerLink="/">MessageMe</a>
-    </span>
+  <span>
+    <a routerLink="/">Photoshop Wars</a>
+  </span>
 
-    <span class="spacer"></span>
+  <span class="spacer"></span>
 
-    <ul>
+  <ul>
 
-      <li>
-        <a mat-button routerLink="/create" routerLinkActive="active">New Post</a>
-      </li>
+    <li *ngIf="userIsAuthenticated">
+      <a mat-button routerLink="/create" routerLinkActive="active">New Post</a>
+    </li>
 
-      <li>
-        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
-      </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/login" routerLinkActive="active">Log In</a>
+    </li>
 
-      <li>
-          <a mat-button routerLink="/signup" routerLinkActive="active">Sign Up</a>
-        </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a mat-button routerLink="/signup" routerLinkActive="active">Sign Up</a>
+    </li>
 
-    </ul>
+    <li *ngIf="userIsAuthenticated">
+      <button mat-button (click)="onLogout()">Log Out</button>
+    </li>
 
-  </mat-toolbar>
+  </ul>
+
+</mat-toolbar>

@@ -1,3 +1,7 @@
+mat-toolbar {
+  margin-bottom: 45px;
+}
+
 ul {
   list-style: none;
   padding: 0;
