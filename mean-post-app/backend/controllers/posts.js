@@ -1,7 +1,7 @@
 const Post = require("../models/post");
 
 //POST
-exports.postPost = (req, res, next) => {
+exports.createPost = (req, res, next) => {
   const url = req.protocol + "://" + req.get("host");
   const post = new Post({
     title: req.body.title,
@@ -25,7 +25,7 @@ exports.postPost = (req, res, next) => {
 }
 
 //GET
-exports.postsGet = (req, res, next) => {
+exports.getPosts = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const postQuery = Post.find();
@@ -52,7 +52,7 @@ exports.postsGet = (req, res, next) => {
 }
 
 //GET ONE
-exports.postGetOne = (req, res, next) => {
+exports.getPost = (req, res, next) => {
   Post.findById(req.params.id).then(post => {
     if (post) {
       res.status(200).json(post);
@@ -69,7 +69,7 @@ exports.postGetOne = (req, res, next) => {
 }
 
 //PUT
-exports.postPut = (req, res, next) => {
+exports.editPost = (req, res, next) => {
   let imagePath = req.body.imagePath;
   if (req.file) {
     const url = req.protocol + "://" + req.get("host");
@@ -87,7 +87,7 @@ exports.postPut = (req, res, next) => {
     _id: req.params.id,
     creator: req.userData.userId
   }, post).then(result => {
-    if (result.nModified > 0) {
+    if (result.n > 0) {
       res.status(200).json({
         message: "Post updated successfully. ᕙʕ•ᴥ•ʔᕗ"
       });
@@ -104,7 +104,7 @@ exports.postPut = (req, res, next) => {
 }
 
 //DELETE
-exports.postDelete = (req, res, next) => {
+exports.deletePost = (req, res, next) => {
   Post.deleteOne({
     _id: req.params.id,
     creator: req.userData.userId

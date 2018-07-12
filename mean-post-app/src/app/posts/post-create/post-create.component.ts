@@ -5,7 +5,7 @@ import { ActivatedRoute, ParamMap } from "@angular/router";
 import { PostsService } from "../posts.service";
 import { Post } from "../post.model";
 import { mimeType } from "./mime-type.validator";
-import { Subscription } from "../../../../node_modules/rxjs";
+import { Subscription } from "rxjs";
 import { AuthService } from "../../auth/auth.service";
 
 @Component({
