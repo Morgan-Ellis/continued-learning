@@ -54,6 +54,10 @@ router.post(
           id: createdPost._id
         }
       });
+    }).catch(error => {
+      res.status(500).json({
+        message: "Unable to add post."
+      });
     });
   }
 );
@@ -78,6 +82,10 @@ router.get("", (req, res, next) => {
       posts: fetchedPosts,
       maxPosts: count
     });
+  }).catch(error => {
+    res.status(500).json({
+      message: "Currently unable to fetch posts."
+    })
   });
 });
 
@@ -91,6 +99,10 @@ router.get("/:id", (req, res, next) => {
         message: "Post not found. ʕ╭ರᴥ•́ʔ"
       });
     }
+  }).catch(error => {
+    res.status(500).json({
+      message: "Currently unable to fetch post."
+    })
   });
 });
 
@@ -125,9 +137,13 @@ router.put(
         });
       } else {
         res.status(401).json({
-          message: "Not authorized to edit this post. ʕ╭ರᴥಠʔ"
+          message: "You are not authorized to edit this post. ʕ╭ರᴥಠʔ"
         });
       }
+    }).catch(error => {
+      res.status(500).json({
+        message: "Currently unable to update post."
+      })
     });
   }
 );
@@ -145,9 +161,13 @@ router.delete("/:id", verifyAuth, (req, res, next) => {
       });
     } else {
       res.status(401).json({
-        message: "Not authorized to edit this post. ʕ╭ರᴥಠʔ"
+        message: "You are authorized to delete this post. ʕ╭ರᴥಠʔ"
       });
     }
+  }).catch(error => {
+    res.status(500).json({
+      message: "Currently unable to delete post."
+    })
   });
 });
 

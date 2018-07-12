@@ -23,3 +23,8 @@ mat-spinner {
   display: flex;
   justify-content: center;
 }
+
+.email-alert {
+  font-size: 12px;
+  color: crimson;
+}

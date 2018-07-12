@@ -3,9 +3,9 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router
-} from "../../../node_modules/@angular/router";
-import { Injectable } from "../../../node_modules/@angular/core";
-import { Observable } from "../../../node_modules/rxjs";
+} from "@angular/router";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 
 import { AuthService } from "./auth.service";
 
