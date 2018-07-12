@@ -11,7 +11,7 @@ const authUrl = "http://localhost:3000/api/user";
 export class AuthService {
   private isAuthenticated = false;
   private token: string;
-  private tokenTimer: NodeJS.Timer;
+  private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -33,6 +33,7 @@ export class AuthService {
     const authData: AuthData = { email: email, password: password };
     this.http.post(authUrl + "/signup", authData).subscribe(response => {
       console.log(response);
+      this.router.navigate(["/login"]);
     });
   }
 
@@ -85,7 +86,7 @@ export class AuthService {
   }
 
   private setAuthTimer(duration: number) {
-    console.log("Setting timer " + duration);
+    console.log("Setting timer: " + duration);
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration * 1000);
